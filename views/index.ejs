@@ -1,0 +1,40 @@
+<%-include ("partials/header") -%>
+
+
+
+
+
+<div class="container">
+    <header class="jumbotron mt-2">
+        <div class="container">
+            <h1>Campgrounds</h1>
+            <p>Check out the best camps!</p>
+            <p> 
+                <a class="btn btn-primary btn-large" href="/Campgrounds/new">Add a new campground :) </a>
+            </p>
+
+        </div>
+        
+    </header>
+    <div class="row text-center">
+        <%campgrounds.forEach(function(campground){%>
+        <div class="col-md-3 col-sm-6">
+            <figure class="figure">
+                <img class="figure-img img-fluid rounded" src="<%=campground.image%>">
+                <figcaption class="figure-caption"><%=campground.name%></figcaption>
+                <a href="/campgrounds/<%=campground._id%>" class="btn btn-primary">More info</a>
+              </figure>
+        
+            
+            
+        </div>
+        <% }); %>
+    </div>
+    
+    
+ 
+
+</div>
+
+
+<%- include  ("partials/footer")-%>
