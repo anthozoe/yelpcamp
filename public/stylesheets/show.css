@@ -1,0 +1,15 @@
+.figure img{
+    width:100%;
+}
+
+.figure .figure-caption {
+    padding: 9px;
+}
+
+#commentcard {
+    background-color: lightgrey;
+}
+
+#deleteform {
+    display: inline;
+}

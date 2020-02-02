@@ -1,96 +1,60 @@
-var express = require("express");
-var app= express();
-var request= require("request");
-var bodyParser= require("body-parser");
-var mongoose=require("mongoose");
+var express       = require("express");
+var app           = express();
+var request       = require("request");
+var bodyParser    = require("body-parser");
+var mongoose      = require("mongoose");
+var Campground    = require("./models/campground");
+var Comment       = require("./models/comment");
+var passport      = require("passport");
+var LocalStrategy = require("passport-local"); 
+var User          = require("./models/user");
+var methodOverride= require("method-override");
+var flash         = require("connect-flash");
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true });
+var commentRoutes    = require("./routes/comments"),
+    campgroundRoutes = require("./routes/campgrounds"),
+    indexRoutes       = require("./routes/index");
+
+//SEEDING THE DATABASE
+var seedDB = require("./seeds");
+//seedDB();
+
+//------------------APP CONFIG----------------------
+mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+app.use(flash());
 
-var campgroungSchema= mongoose.Schema({
-    name: String,
-    image: String,
-    description: String
 
+//--------------AUTH CONFIG-----------------
+app.use(require("express-session")({
+    secret:"Mickey I love you",
+    resave: false,
+    saveUninitialized:false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+//-----------------FINDING CURRENT USER-------------
+app.use(function(req,res,next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
 });
 
-var Campground= mongoose.model("Campground", campgroungSchema);
+//------------------USING ROUTES-------------------
+app.use(indexRoutes);
+app.use("/campgrounds",campgroundRoutes);
+app.use("/campgrounds/:id/comments", commentRoutes);
 
-
-app.get("/", function(req, res){
-    res.render("home");
-
-});
-
-app.get("/campgrounds", function(req, res){
-    Campground.find({}, function(err, allCampgrounds){
-        if (err){
-            console.log(err);
-        }
-        else {
-            console.log("Found all campgrounds and added them to the site");
-            res.render("index", {campgrounds: allCampgrounds});
-
-        }
-    }); 
-    
-});
-
-// Campground.create({name: "High Mountain", image: "https://inteng-storage.s3.amazonaws.com/img/iea/MRw4y5ABO1/sizes/camping-tech-trends_resize_md.jpg", description:"Very Nice Mountain!"},
-//     function(err, newcampground){
-//        if (err){
-//            console.log("There was an error");
-//            console.log(err);
-//        }
-//        else{
-//            console.log("Added a new campground!");
-    
-//        }
-//    });
-
-app.get("/campgrounds/new", function(req,res){
-    res.render("new");
-});
-
-app.post("/campgrounds", function(req, res){
-    var name=req.body.name;
-    var image=req.body.image;
-    var description=req.body.description;
-    var newCampground= {name: name, image: image, description: description};
-    Campground.create(newCampground,
-     function(err, newcampground){
-        if (err){
-            console.log("There was an error");
-            console.log(err);
-        }
-        else{
-            console.log("Added a new campground!");
-            res.redirect("/campgrounds");
-        }
-    });
-     
-});
-
-app.get("/campgrounds/:id", function(req, res){
-    Campground.findById(req.params.id, function(err, foundCampground){
-       if (err){
-           console.log(err)
-       }
-       else {
-        res.render("show", {campground: foundCampground});
-
-       }
-
-    });
-   
-
-});
-
-//fhdfhsffds;s
-
-
-
+//------------------PORT CONFIG-------------------
 app.listen(3000, function(){
     console.log("Yelp Camp Server is on!")
 });

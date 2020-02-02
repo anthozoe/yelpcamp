@@ -1,7 +1,4 @@
-<%-include ("partials/header") -%>
-
-
-
+<%-include ("../partials/header") -%>
 
 
 <div class="container">
@@ -19,10 +16,10 @@
     <div class="row text-center">
         <%campgrounds.forEach(function(campground){%>
         <div class="col-md-3 col-sm-6">
-            <figure class="figure">
-                <img class="figure-img img-fluid rounded" src="<%=campground.image%>">
+            <figure class="figure border">
+                <img class="figure-img img-fluid" src="<%=campground.image%>">
                 <figcaption class="figure-caption"><%=campground.name%></figcaption>
-                <a href="/campgrounds/<%=campground._id%>" class="btn btn-primary">More info</a>
+                <a href="/campgrounds/<%=campground._id%>" class="btn btn-primary mb-1">More info</a>
               </figure>
         
             
@@ -37,4 +34,4 @@
 </div>
 
 
-<%- include  ("partials/footer")-%>
+<%- include  ("../partials/footer")-%>

@@ -3,6 +3,7 @@
 <head>
     <title>Yelp Camp</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/show.css">
     <style>
         
     </style>
@@ -18,24 +19,46 @@
         <div class="collapse navbar-collapse" id="navbarlinks">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home </a>
+              <a class="nav-link" href="/">Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
+              <a class="nav-link" href="#">Campgrounds</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item ">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Sign Up</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Log Out</a>
+            <% if (!currentUser) {%> 
+                <li class="nav-item ">
+                  <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">Sign Up</a>
+                </li>
+            <%} else {%>
+              <li class="nav-item">
+                <a class="nav-link">Signed In as <%=currentUser.username%></a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Log Out</a>
+              </li>
+
+          <%}%>
           </ul>
         
         </div>
       </nav>
+      
+      <div class="container">
+        <%if (error && error.length>0){%>
+            <div class="alert alert-danger" role="alert">
+              <%=error%>
+            </div>
+        <%}%>
+        <%if (success && success.length>0){%>
+           <div class="alert alert-success" role="alert">
+             <%=success%>
+           </div>
+        <%}%>
+      </div>
+     
+   
 
