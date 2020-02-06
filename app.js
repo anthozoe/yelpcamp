@@ -20,7 +20,8 @@ var seedDB = require("./seeds");
 //seedDB();
 
 //------------------APP CONFIG----------------------
-mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect("mongodb://Zoe:123@yelpcamp-shard-00-00-edzg2.mongodb.net:27017,yelpcamp-shard-00-01-edzg2.mongodb.net:27017,yelpcamp-shard-00-02-edzg2.mongodb.net:27017/test?ssl=true&replicaSet=yelpcamp-shard-0&authSource=admin&retryWrites=true&w=majority", 
+{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
 app.use(express.static(__dirname + "/public"));
