@@ -20,7 +20,7 @@ var seedDB = require("./seeds");
 //seedDB();
 
 //------------------APP CONFIG----------------------
-var uri ="mongodb://Zoe:123@yelpcamp-shard-00-02-edzg2.mongodb.net:27017/test?retryWrites=true&w=majority";
+var uri ="mongodb+srv://Zoe:123@yelpcamp-edzg2.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri, 
 { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
