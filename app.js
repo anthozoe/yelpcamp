@@ -20,7 +20,8 @@ var seedDB = require("./seeds");
 //seedDB();
 
 //------------------APP CONFIG----------------------
-mongoose.connect("mongodb://Zoe:123@yelpcamp-shard-00-02-edzg2.mongodb.net:27017/test?ssl=true&replicaSet=yelpcamp-shard-0&authSource=admin&retryWrites=true&w=majority", 
+var uri ="mongodb://Zoe:123@yelpcamp-shard-00-02-edzg2.mongodb.net:27017/test?ssl=true&replicaSet=yelpcamp-shard-0&authSource=admin&retryWrites=true&w=majority";
+mongoose.connect(uri, 
 { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 app.use(bodyParser.urlencoded({extended: true}));
