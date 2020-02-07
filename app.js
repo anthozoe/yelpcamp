@@ -20,7 +20,7 @@ var seedDB = require("./seeds");
 //seedDB();
 
 //------------------APP CONFIG----------------------
-mongoose.connect("mongodb://Zoe:<password>@yelpcamp-edzg2.mongodb.net/test?retryWrites=true&w=majority", 
+mongoose.connect("mongodb://Zoe:123@yelpcamp-edzg2.mongodb.net/test?retryWrites=true&w=majority", 
 { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine","ejs");
