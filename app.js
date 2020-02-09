@@ -23,7 +23,7 @@ var seedDB = require("./seeds");
 var uri ="mongodb+srv://Zoe:123@yelpcamp-edzg2.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri, 
 { useNewUrlParser: true, 
- // useUnifiedTopology: true, 
+  useUnifiedTopology: true, 
   useFindAndModify: false },
   () => { console.log("we are connected")}).catch(err => console.log(err));
 
